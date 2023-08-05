@@ -1,0 +1,58 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;700&display=swap'); */
+
+  @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@200;300;400;600;800;900&display=swap');
+
+html{
+  scroll-behavior: smooth;
+
+}
+
+*{
+  box-sizing: border-box;
+}
+
+body{
+  background-color: #040714;
+  color: #f9f9f9;
+  font-family: 'Public Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: top;
+}
+
+
+a{
+  color: #f9f9f9;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+@media only screen and (min-width: 760px){
+  body{
+    font-size: 16px;
+  }
+}
+
+
+@media only screen and (min-width: 488px) and (max-width: 768){
+  body{
+    font-size: 14px;
+  }
+}
+
+
+@media only screen and (max-width: 478){
+  body{
+    font-size: 24;
+  }
+}
+
+container{
+  overflow: hidden;
+display: flex;
+flex-direction: column;
+text-alingn: center;
+height: 100vh;
+}
