@@ -1,25 +1,98 @@
-import React from 'react'
-import { styled } from 'styled-components'
+// eslint-disable-next-line react-hooks/exhaustive-deps
+import { styled } from 'styled-components';
+import {auth, provider} from './firebase';
+import { useDispatch,useSelector  } from 'react-redux';
+import {useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { selectUserName,
+         selectUserPhoto,
+         setUSerloginDetails,
+         setSignOutState 
+        } from '../features/user/userSlice';
 
-function Header() {
-  return (
+function Header(props) {
+    const dispatch = useDispatch()
+    const history = useNavigate();
+    const userName = useSelector(selectUserName);
+    const userPhoto = useSelector(selectUserPhoto);
+
+    useEffect(() =>{
+        auth.onAuthStateChanged( async (user) =>{
+            if(user){
+                setUser(user);
+             history('/home')
+            }
+        });
+    },[userName]) 
+
+const handleAuth = async() =>{
+
+    if(!userName){
+            auth
+                .signInWithPopup(provider)
+                .then((result) =>{
+                    setUser(result.user)
+                })
+                .catch((error) =>{
+                    alert(error.message);
+                });
+            } else if(userName){
+                 auth
+                    .signOut()
+                    .then((result) =>{
+                        dispatch(setSignOutState());
+                        history("/")
+                    }).catch((error) =>{
+                        alert(error.message)
+                    })
+                }
+            
+        
+        }
+        
+    
+    const setUser = (user) =>{
+        dispatch(setUSerloginDetails({
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL,
+        })
+        );
+    };
+const [hover,setHover] = useState("")
+    const getLogout = () =>{
+        setHover("visible");
+    }
+
+return (
    <Nav>
    <Logo>
 
     <img src='/images/logo.svg' alt='logo'/>
    </Logo>
-   <NavMenu>
-    <a href='/'><img src='/images/home-icon.svg' alt='homeicone' /><span>HOME</span></a>
-    <a href='/'><img src='/images/home-icon.svg' alt='homeicone' /><span>SEARCH</span></a>
-    <a href='/'><img src='/images/home-icon.svg' alt='homeicone' /><span>WATCHLIST</span></a>
-    <a href='/'><img src='/images/home-icon.svg' alt='homeicone' /><span>ORGINALS</span></a>
-    <a href='/'><img src='/images/home-icon.svg' alt='homeicone' /><span>MOVIES</span></a>
-    <a href='/'><img src='/images/home-icon.svg' alt='homeicone' /><span>SERIES</span></a>
+   {!userName ?
+    <Loginbtn onClick={handleAuth}> Login</Loginbtn>
+    :
+    <>
+    <NavMenu>
+    <a href='/'><img src='/images/home-icon.svg' alt='homeicone' /><span>HOME</span>
+    </a>
+    <a href='/'><img src='/images/search-icon.svg' alt='homeicone' /><span>SEARCH</span></a>
+    <a href='/'><img src='/images/watchlist-icon.svg' alt='homeicone' /><span> WATCHLIST</span></a>
+    <a href='/'><img src='/images/original-icon.svg' alt='homeicone' /><span>ORGINALS</span></a>
+    <a href='/'><img src='/images/movie-icon.svg' alt='homeicone' /><span>MOVIES</span></a>
+    <a href='/'><img src='/images/series-icon.svg' alt='homeicone' /><span>SERIES</span></a>
    </NavMenu>
+   <SignOut>
+   <UserImage src = {userPhoto} alt={userName} onMouseOver={getLogout}/>
+   <DropDown onClick={handleAuth }>Signout</DropDown>
+   </SignOut>
+    </>
+    }
+   
    </Nav>
-  )
+  );
 }
-
 const Nav = styled.nav`
     position: fixed;
     top: 0;
@@ -71,7 +144,7 @@ const NavMenu = styled.div`
         display: flex;
         align-items: center;
         padding: 0 12px;
-    }
+    
 
     img{
         height: 25px;
@@ -103,6 +176,7 @@ const NavMenu = styled.div`
             transition: all 250ms cubic-bezier(0.25,0.46,0.45,0.94) 0s;
             visibility: hidden;
             width: auto;
+     
         }
      }
      &:hover {
@@ -112,10 +186,84 @@ const NavMenu = styled.div`
             opacity: 1 !important;
         }
      }
+    }
 
     @media (max-width: 768px){
         display: none;
     }
 `;
+
+const Loginbtn = styled.a`
+    background: #000;
+    border: 1px solid #f9f9f9;
+    color: #f9f9f9;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: ease-in-out .2s;
+    letter-spacing: 1.5px;
+
+    &:hover{
+        background-color: #f9f9f9;
+        color: #000;
+        border-color: transparent;
+    }
+
+    @media (max-width: 768px){
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+`;
+
+const UserImage = styled.img`
+    width: 100%;
+    border-radius: 100%;
+   
+    
+  
+
+`;
+
+const DropDown =styled.p`
+position: absolute;
+font-size: 16px;
+letter-spacing: 1.5px;
+background: rgb(19,19,19);
+padding: 10px ;
+top: 0px;
+border: 1px solid #fff;
+border-radius: 4px;
+opacity: 0;
+visibility:;
+cursor: pointer;
+
+
+`;
+
+const SignOut = styled.div`
+
+ height: 50px;
+ width: 50px;
+display:flex;
+align-items: center;
+justify-content: center;
+
+&:hover{
+        ${DropDown} {
+            opacity: 1;
+            top: 43px;
+            transition-duration: .4s; 
+
+            &:hover{
+                color: #000;
+                background-color: #fff;
+
+            }
+        }
+    }
+    
+
+`;
+
 
 export default Header
