@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import ImageSlide from './ImageSlide';
+import Viewers from './Viewers';
+import Recommends from './Recommends';
+import Newtodesiney from './Newtodesiney';
+import Originals from './Originals';
+import Trending from './Trending';
 
 
 function Home() {
@@ -10,6 +15,11 @@ function Home() {
   return (
    <Container>
     <ImageSlide />
+    <Viewers />
+    <Recommends />
+    <Newtodesiney />
+    <Originals />
+    <Trending />
    </Container>
   )
 }
