@@ -1,32 +1,27 @@
 import React from 'react'
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
-
-function Recommends() {
+import { useSelector } from 'react-redux';
+import { selectRecommends, } from '../features/movies/moviesSlice';
+function Recommends(props) {
+     const movies = useSelector(selectRecommends);
+     console.log(movies);
   return (
     <Container>
         <h4>Recommended for you</h4>
         <Content>
-        <Wrap>
-            <Link to="/">
-                <img src='https://static.wikia.nocookie.net/disney/images/6/6b/SadAlma.png'  alt=''/>
-            </Link>
-        </Wrap>
-        <Wrap>
-            <Link to="/">
-                <img src='https://static.wikia.nocookie.net/disney/images/6/6b/SadAlma.png'  alt=''/>
-            </Link>
-        </Wrap>
-        <Wrap>
-            <Link to="/">
-                <img src='https://static.wikia.nocookie.net/disney/images/6/6b/SadAlma.png'  alt=''/>
-            </Link>
-        </Wrap>
-        <Wrap>
-            <Link to="/">
-                <img src='https://static.wikia.nocookie.net/disney/images/6/6b/SadAlma.png'  alt=''/>
-            </Link>
-        </Wrap>
+        {movies &&
+        movies.map((movie, key) => {
+            return(
+            <Wrap key={key}>
+                {movie.id}
+                <Link to={`/detail/${movie.id}`}>
+                    <img src={movie.cardimg} alt={movie.title} />
+                </Link>
+            </Wrap>
+            )
+        })}
+       
         </Content>
     </Container>
   )
