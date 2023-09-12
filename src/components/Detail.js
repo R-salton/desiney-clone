@@ -119,7 +119,7 @@ padding: 0 calc(3.5vw + 5px );
     height: 100vh;
      @media (max-width: 768px){
         width: initial;
-        height: 400px;
+       
      }
   }
 
@@ -156,7 +156,9 @@ const Controls = styled.div`
     flex-flow: row nowrap;
     margin: 12px 0px;
     min-height: 56px;
-
+@media(max-width: 768px){
+    font-size: 12px;
+}
 
 `;
 
@@ -219,12 +221,22 @@ text-transform: uppercase;
 img{
     width: 32px;
 
+
 }
 
 &:hover{
     background: rgb(198,198,200);
     color: rgb(249,249,249);
    
+}
+
+@media(max-width: 768px){
+    padding: 0px 18px;
+    font-size: 12px;
+    height: 45px;
+    img{
+        width: 25px
+    }
 }
 
 `;

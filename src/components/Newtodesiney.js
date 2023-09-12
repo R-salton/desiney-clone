@@ -16,7 +16,7 @@ function Newtodesiney() {
             movies.map((movie, key) =>{
                 return(
                 <Wrap key={key}>
-                {movie.id}
+              
                 <Link to={`/detail/${movie.id}`}>
                     <img src={movie.cardimg} alt={movie.title} />
                 </Link>

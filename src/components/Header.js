@@ -2,7 +2,7 @@
 import { styled } from 'styled-components';
 import {auth, provider} from './firebase';
 import { useDispatch,useSelector  } from 'react-redux';
-import {useNavigate } from 'react-router-dom';
+import {Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { selectUserName,
          selectUserPhoto,
@@ -24,6 +24,9 @@ function Header(props) {
             }
         });
     },[userName]) 
+
+
+   
 
 const handleAuth = async() =>{
 
@@ -64,6 +67,9 @@ const [hover,setHover] = useState("")
         setHover("visible");
     }
 
+
+
+
 return (
    <Nav>
    <Logo>
@@ -74,15 +80,16 @@ return (
     <Loginbtn onClick={handleAuth}> Login</Loginbtn>
     :
     <>
-    <NavMenu>
-    <a href='/'><img src='/images/home-icon.svg' alt='homeicone' /><span>HOME</span>
-    </a>
+    <NavMenu >
+    <Link to={"/home"}><a href='/'><img src='/images/home-icon.svg' alt='homeicone' /><span>HOME</span></a>
+    </Link>
     <a href='/'><img src='/images/search-icon.svg' alt='homeicone' /><span>SEARCH</span></a>
     <a href='/'><img src='/images/watchlist-icon.svg' alt='homeicone' /><span> WATCHLIST</span></a>
     <a href='/'><img src='/images/original-icon.svg' alt='homeicone' /><span>ORGINALS</span></a>
     <a href='/'><img src='/images/movie-icon.svg' alt='homeicone' /><span>MOVIES</span></a>
     <a href='/'><img src='/images/series-icon.svg' alt='homeicone' /><span>SERIES</span></a>
    </NavMenu>
+
    <SignOut>
    <UserImage src = {userPhoto} alt={userName} onMouseOver={getLogout}/>
    <DropDown onClick={handleAuth }>Signout</DropDown>
@@ -188,9 +195,7 @@ const NavMenu = styled.div`
      }
     }
 
-    @media (max-width: 768px){
-        display: none;
-    }
+ 
 `;
 
 const Loginbtn = styled.a`
@@ -264,6 +269,10 @@ justify-content: center;
     
 
 `;
+
+
+
+
 
 
 export default Header
