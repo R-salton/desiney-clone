@@ -80,9 +80,10 @@ return (
     <Loginbtn onClick={handleAuth}> Login</Loginbtn>
     :
     <>
-    <NavMenu >
+    <NavMenu>
     <Link to={"/home"}><a href='/'><img src='/images/home-icon.svg' alt='homeicone' /><span>HOME</span></a>
     </Link>
+    
     <a href='/'><img src='/images/search-icon.svg' alt='homeicone' /><span>SEARCH</span></a>
     <a href='/'><img src='/images/watchlist-icon.svg' alt='homeicone' /><span> WATCHLIST</span></a>
     <a href='/'><img src='/images/original-icon.svg' alt='homeicone' /><span>ORGINALS</span></a>
@@ -147,26 +148,28 @@ const NavMenu = styled.div`
     margin-right: auto;
     margin-left:30px;
 
+    
+
     a{
         display: flex;
         align-items: center;
         padding: 0 12px;
-    
+      
 
-    img{
-        height: 25px;
-        width: 25px;
-        z-index: auto;
-    }
-     span{
-        color: rgb(249,249,249);
-        font-size: 13px;
-        letter-spacing: 1.4px;
-        line-height: 1.08;
-        margin-left: 8px;
-        padding: 0px 0px;
-        white-space: nowrap;
-        position:relative;
+        img{
+            height: 25px;
+            width: 25px;
+            z-index: auto;
+        }
+        span{
+            color: rgb(249,249,249);
+            font-size: 13px;
+            letter-spacing: 1.4px;
+            line-height: 1.08;
+            margin-left: 8px;
+            padding: 0px 0px;
+            white-space: nowrap;
+            position:relative;
 
         &:before{
             background-color: rgb(249,249,249);
@@ -185,15 +188,28 @@ const NavMenu = styled.div`
             width: auto;
      
         }
+      
      }
+     
      &:hover {
         span:before{
             transform: scaleX(1);
             visibility: visible;
             opacity: 1 !important;
+    
         }
+
+     
      }
+
+
+    
+
     }
+    @media(max-width: 768px){
+        display: none;
+     }
+  
 
  
 `;
@@ -217,6 +233,7 @@ const Loginbtn = styled.a`
     @media (max-width: 768px){
         padding: 6px 10px;
         font-size: 12px;
+        
     }
 `;
 
